@@ -4,6 +4,7 @@
 
     //We will use the ${workspaceFolderBasename} as name for our image and container name. This ensures matching across launch.json and tasks.json
     "version": "2.0.0",
+    
     "tasks": [
         {
             //Normal build of container with production settings
@@ -14,13 +15,7 @@
             },
             "command": "docker build . -t ${workspaceFolderBasename}:latest -f Dockerfile",
             "group": "build",
-            "problemMatcher": "$msCompile",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            }
+            "problemMatcher": []
         },
         {
             //Build the container for Debug using Dockerfile.debug
@@ -32,13 +27,8 @@
             },
             "command": "docker build . -t ${workspaceFolderBasename}:debug -f Dockerfile.debug",
             "group": "build",
-            "problemMatcher": "$msCompile",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            }
+            "problemMatcher": []
+
         },
         {
             //run the debug container locally exposing ports to access the webapp
