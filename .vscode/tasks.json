@@ -1,0 +1,62 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+
+    //We will use the ${workspaceFolderBasename} as name for our image and container name. This ensures matching across launch.json and tasks.json
+    "version": "2.0.0",
+    "tasks": [
+        {
+            //Normal build of container with production settings
+            "label": "docker-build",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "docker build . -t simontrockel/${workspaceFolderBasename}:latest -f Dockerfile",
+            "group": "build",
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            //Build the container for Debug using Dockerfile.debug
+            "label": "docker-build-debug",
+            "identifier": "docker-build-debug",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "docker build . -t simontrockel/${workspaceFolderBasename}:debug -f Dockerfile.debug",
+            "group": "build",
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            //run the debug container locally exposing ports to access the webapp
+            //you might want to change the port settings
+            "label": "docker-run-debug",
+            "type": "shell",
+            "command": "docker run -d --name ${workspaceFolderBasename}-debug -p 80:80 -p 443:443 simontrockel/${workspaceFolderBasename}:debug",
+            "group": "none",
+            "dependsOn": "docker-build-debug",
+            "problemMatcher": []
+        },
+        {
+            //Kill the debug container after debug is finished
+            "label": "docker-kill-debug",
+            "type": "shell",
+            "command": "docker rm --force ${workspaceFolderBasename}-debug",
+            "group": "none",
+            "problemMatcher": []
+        }
+    ]
+}
