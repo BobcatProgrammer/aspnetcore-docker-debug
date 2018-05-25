@@ -12,7 +12,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "docker build . -t simontrockel/${workspaceFolderBasename}:latest -f Dockerfile",
+            "command": "docker build . -t ${workspaceFolderBasename}:latest -f Dockerfile",
             "group": "build",
             "problemMatcher": "$msCompile",
             "presentation": {
@@ -30,7 +30,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "docker build . -t simontrockel/${workspaceFolderBasename}:debug -f Dockerfile.debug",
+            "command": "docker build . -t ${workspaceFolderBasename}:debug -f Dockerfile.debug",
             "group": "build",
             "problemMatcher": "$msCompile",
             "presentation": {
@@ -45,7 +45,7 @@
             //you might want to change the port settings
             "label": "docker-run-debug",
             "type": "shell",
-            "command": "docker run -d --name ${workspaceFolderBasename}-debug -p 80:80 -p 443:443 simontrockel/${workspaceFolderBasename}:debug",
+            "command": "docker run -d --name ${workspaceFolderBasename}-debug -p 80:8080 -p 443:8443 ${workspaceFolderBasename}:debug",
             "group": "none",
             "dependsOn": "docker-build-debug",
             "problemMatcher": []

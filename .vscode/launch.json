@@ -1,0 +1,26 @@
+{
+    "logging": {
+        "engineLogging": true
+    },
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Docker Attach (web)",
+            "type": "coreclr",
+            "request": "attach",
+            "preLaunchTask": "docker-run-debug",
+            "postDebugTask": "docker-kill-debug",
+            "processName":"dotnet",
+            "sourceFileMap": {
+                "/source": "${workspaceRoot}"
+            },
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [ "exec", "-i", "${workspaceFolderBasename}-debug"],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceRoot}",
+                "quoteArgs": false
+            }
+        }
+    ]
+}
